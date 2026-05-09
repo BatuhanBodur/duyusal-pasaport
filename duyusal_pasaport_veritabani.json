@@ -719,5 +719,51 @@
             "Standart süreç uygulanabilir; yine de bireyin anlık tepkileri gözlemlenmelidir."
         ],
         "ek_notlar": ""
+    },
+    "D9C78CEE": {
+        "pasaport_id": "D9C78CEE",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=D9C78CEE",
+        "olusturma_tarihi": "09.05.2026 23:45",
+        "hasta_bilgileri": {
+            "ad_soyad": "Giray Tekerek",
+            "yas": 10,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Berkay Yerhan",
+            "telefon": "5565465465"
+        },
+        "iletisim_tercihi": "Görsel anlatım",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 3,
+            "isik_hassasiyeti": 3,
+            "dokunma_hassasiyeti": 3,
+            "kalabalik_hassasiyeti": 3,
+            "bekleme_toleransi_dusuklugu": 3
+        },
+        "tetikleyiciler": [
+            "Kalabalık ortam",
+            "İğne / kan alma",
+            "Beyaz önlük",
+            "Parlak ışık"
+        ],
+        "sakinlestirici_yontemler": [
+            "Veli yanında olmalı",
+            "Kısa açıklama yapılmalı",
+            "Tablet / görsel destek",
+            "Oyuncak / nesne"
+        ],
+        "risk_skoru": 3.0,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "İğne veya kan alma işleminden önce sakin bir dille açıklama yapılmalıdır.",
+            "Giriş ve bekleme süreci daha sakin alanlarda yönetilmelidir.",
+            "Personel yaklaşımı yumuşak olmalı, beyaz önlük kaynaklı kaygı azaltılmalıdır.",
+            "Veli veya refakatçi süreç boyunca mümkün olduğunca yanında tutulmalıdır.",
+            "Görsel destek veya dikkat dağıtıcı rahatlatıcı araçlar kullanılabilir.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır."
+        ],
+        "ek_notlar": "lkdflmsdflksmfdm"
     }
 }

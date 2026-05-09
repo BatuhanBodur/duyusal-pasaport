@@ -4,11 +4,8 @@ import uuid
 from html import escape
 
 from styles import apply_styles
-from database import save_passport_to_database, get_passport_from_database
-from qr_utils import (
-    create_qr_code,
-    generate_qr_url
-)
+from database import save_passport, find_passport_by_id
+from qr_utils import create_qr_code, generate_qr_url
 from risk_engine import calculate_risk
 from recommendations import generate_recommendations
 from components import (
@@ -17,7 +14,8 @@ from components import (
     render_pills,
     render_general_overview,
     render_digital_passport,
-    render_staff_panel
+    render_staff_panel,
+    render_qr_personnel_panel
 )
 
 
@@ -36,14 +34,6 @@ apply_styles()
 
 
 # ============================================================
-# SESSION STATE
-# ============================================================
-
-if "passport" not in st.session_state:
-    st.session_state.passport = None
-
-
-# ============================================================
 # QR İLE GELEN PASAPORTU YÜKLE VE GÖRÜNTÜLE (READ-ONLY MOD)
 # ============================================================
 
@@ -53,47 +43,34 @@ qr_passport_id = params.get("passport_id", None)
 
 # Eğer URL'de passport_id varsa, uygulama sadece görüntüleme modunda çalışır
 if qr_passport_id:
-    # Sidebar'ı ve genişletme butonunu CSS ile tamamen gizle (Ekstra güvenlik)
+    # Sidebar'ı ve genişletme butonunu CSS ile tamamen gizle
     st.markdown("""
         <style>
-            [data-testid="stSidebar"] {
-                display: none;
-            }
-            [data-testid="collapsedControl"] {
-                display: none;
-            }
-            .main .block-container {
-                max-width: 1100px;
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
+            [data-testid="stSidebar"] { display: none !important; }
+            [data-testid="collapsedControl"] { display: none !important; }
+            .main .block-container { max-width: 1100px; padding-top: 2rem; }
         </style>
     """, unsafe_allow_html=True)
-    
-    from database import find_passport_by_id
-    from components import render_qr_readonly_mode
     
     # Veritabanında ara
     passport_data = find_passport_by_id(qr_passport_id)
     
     if passport_data:
         # Doğrudan özel read-only personel panelini göster
-        render_qr_readonly_mode(passport_data)
-        
-        # Akışı burada durdur! (Sidebar ve kayıt formu kesinlikle render edilmez)
+        render_qr_personnel_panel(passport_data)
         st.stop()
     else:
-        # Kayıt bulunamadıysa hata göster ve dur
         render_hero()
         st.error(f"⚠️ Bu QR koda ait hasta bilgisi bulunamadı: {qr_passport_id}")
         st.stop()
 
 
 # ============================================================
-# ÜST BAŞLIK
+# SESSION STATE
 # ============================================================
 
-render_hero()
+if "passport" not in st.session_state:
+    st.session_state.passport = None
 
 
 # ============================================================
@@ -145,38 +122,20 @@ with st.sidebar:
         triggers = st.multiselect(
             "Tetikleyici Durumlar",
             [
-                "Yüksek ses",
-                "Parlak ışık",
-                "Kalabalık ortam",
-                "İğne / kan alma",
-                "Beyaz önlük",
-                "Uzun bekleme",
-                "Ani temas",
-                "Kapalı alan",
-                "Bilinmeyen ortam"
+                "Yüksek ses", "Parlak ışık", "Kalabalık ortam", "İğne / kan alma",
+                "Beyaz önlük", "Uzun bekleme", "Ani temas", "Kapalı alan", "Bilinmeyen ortam"
             ]
         )
 
         calming_methods = st.multiselect(
             "Destekleyici / Sakinleştirici Yöntemler",
             [
-                "Sessiz alan",
-                "Kulaklık",
-                "Oyuncak / nesne",
-                "Tablet / görsel destek",
-                "Veli yanında olmalı",
-                "Kısa açıklama yapılmalı",
-                "Bekleme süresi azaltılmalı",
-                "Loş ışık tercih edilmeli"
+                "Sessiz alan", "Kulaklık", "Oyuncak / nesne", "Tablet / görsel destek",
+                "Veli yanında olmalı", "Kısa açıklama yapılmalı", "Bekleme süresi azaltılmalı", "Loş ışık tercih edilmeli"
             ]
         )
 
-        notes = st.text_area(
-            "Ek Notlar",
-            placeholder=(
-                "Örn: Kalabalıkta huzursuzlanıyor, işlem öncesi kısa açıklama yapılınca rahatlıyor..."
-            )
-        )
+        notes = st.text_area("Ek Notlar")
 
         submitted = st.form_submit_button("Pasaportu Oluştur / Güncelle")
 
@@ -184,30 +143,14 @@ with st.sidebar:
             if not patient_name.strip() or not caregiver_name.strip():
                 st.error("Bireyin adı ve veli / refakatçi adı boş bırakılamaz.")
             else:
-                risk_score, risk_level, risk_css = calculate_risk(
-                    sound,
-                    light,
-                    touch,
-                    crowd,
-                    waiting
-                )
+                risk_score, risk_level, risk_css = calculate_risk(sound, light, touch, crowd, waiting)
+                recommendations = generate_recommendations(sound, light, touch, crowd, waiting, triggers, calming_methods)
 
-                recommendations = generate_recommendations(
-                    sound,
-                    light,
-                    touch,
-                    crowd,
-                    waiting,
-                    triggers,
-                    calming_methods
-                )
-
-                passport_id = str(uuid.uuid4())[:8].upper()
-                passport_url = generate_qr_url(passport_id)
-
+                new_passport_id = str(uuid.uuid4())[:8].upper()
+                
                 passport_data = {
-                    "pasaport_id": passport_id,
-                    "pasaport_url": passport_url,
+                    "pasaport_id": new_passport_id,
+                    "pasaport_url": generate_qr_url(new_passport_id),
                     "olusturma_tarihi": datetime.now().strftime("%d.%m.%Y %H:%M"),
                     "hasta_bilgileri": {
                         "ad_soyad": patient_name,
@@ -235,15 +178,18 @@ with st.sidebar:
                     "ek_notlar": notes
                 }
 
+                # Önce veritabanına kaydet
+                save_passport(passport_data)
+                
                 st.session_state.passport = passport_data
-                save_passport_to_database(passport_data)
-
-                st.success("Pasaport başarıyla oluşturuldu ve kaydedildi.")
+                st.success(f"✅ Pasaport başarıyla oluşturuldu ve JSON'a kaydedildi. ID: {new_passport_id}")
 
 
 # ============================================================
 # ANA İÇERİK
 # ============================================================
+
+render_hero()
 
 passport = st.session_state.passport
 
