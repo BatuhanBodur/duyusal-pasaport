@@ -34,16 +34,14 @@ apply_styles()
 
 
 # ============================================================
-# QR İLE GELEN PASAPORTU YÜKLE VE GÖRÜNTÜLE (READ-ONLY MOD)
+# QR MODU KONTROLÜ (EN ÜSTTE)
 # ============================================================
 
-# URL parametrelerini oku
 params = st.query_params
 qr_passport_id = params.get("passport_id", None)
 
-# Eğer URL'de passport_id varsa, uygulama sadece görüntüleme modunda çalışır
 if qr_passport_id:
-    # Sidebar'ı ve genişletme butonunu CSS ile tamamen gizle
+    # Sidebar ve kontrolleri CSS ile gizle
     st.markdown("""
         <style>
             [data-testid="stSidebar"] { display: none !important; }
@@ -52,11 +50,9 @@ if qr_passport_id:
         </style>
     """, unsafe_allow_html=True)
     
-    # Veritabanında ara
     passport_data = find_passport_by_id(qr_passport_id)
     
     if passport_data:
-        # Doğrudan özel read-only personel panelini göster
         render_qr_personnel_panel(passport_data)
         st.stop()
     else:
@@ -66,7 +62,7 @@ if qr_passport_id:
 
 
 # ============================================================
-# SESSION STATE
+# NORMAL MOD: SESSION STATE
 # ============================================================
 
 if "passport" not in st.session_state:
@@ -79,7 +75,6 @@ if "passport" not in st.session_state:
 
 with st.sidebar:
     st.markdown("## 🧾 Pasaport Bilgileri")
-    st.markdown("Birey ve veli bilgilerini gir.")
     
     with st.form("passport_form"):
         patient_name = st.text_input("Bireyin Adı Soyadı")
@@ -137,20 +132,23 @@ with st.sidebar:
 
         notes = st.text_area("Ek Notlar")
 
-        submitted = st.form_submit_button("Pasaportu Oluştur / Güncelle")
+        submitted = st.form_submit_button("Pasaportu Oluştur / Kaydet")
 
         if submitted:
             if not patient_name.strip() or not caregiver_name.strip():
-                st.error("Bireyin adı ve veli / refakatçi adı boş bırakılamaz.")
+                st.error("Ad Soyad ve Veli bilgileri zorunludur.")
             else:
+                # 1. ID Üret
+                new_id = str(uuid.uuid4())[:8].upper()
+                
+                # 2. Risk ve Önerileri Hesapla
                 risk_score, risk_level, risk_css = calculate_risk(sound, light, touch, crowd, waiting)
                 recommendations = generate_recommendations(sound, light, touch, crowd, waiting, triggers, calming_methods)
 
-                new_passport_id = str(uuid.uuid4())[:8].upper()
-                
+                # 3. Nesneyi Oluştur
                 passport_data = {
-                    "pasaport_id": new_passport_id,
-                    "pasaport_url": generate_qr_url(new_passport_id),
+                    "pasaport_id": new_id,
+                    "pasaport_url": generate_qr_url(new_id),
                     "olusturma_tarihi": datetime.now().strftime("%d.%m.%Y %H:%M"),
                     "hasta_bilgileri": {
                         "ad_soyad": patient_name,
@@ -178,11 +176,20 @@ with st.sidebar:
                     "ek_notlar": notes
                 }
 
-                # Önce veritabanına kaydet
+                # 4. JSON'a Kaydet (En önemli adım)
                 save_passport(passport_data)
                 
+                # 5. Session State Güncelle
                 st.session_state.passport = passport_data
-                st.success(f"✅ Pasaport başarıyla oluşturuldu ve JSON'a kaydedildi. ID: {new_passport_id}")
+                
+                # 6. Başarı Mesajı ve Doğrulama
+                st.success(f"✅ Pasaport JSON'a kaydedildi. ID: {new_id}")
+                
+                # Doğrulama Testi
+                if find_passport_by_id(new_id):
+                    st.info("✅ Kayıt veritabanında doğrulandı. QR okutulmaya hazır.")
+                else:
+                    st.error("❌ Kayıt JSON'a yazılamadı! Lütfen tekrar deneyin.")
 
 
 # ============================================================

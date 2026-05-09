@@ -9,7 +9,6 @@ BASE_URL = "https://duyusal-pasaport-batuhan.streamlit.app"
 def generate_qr_url(passport_id):
     """
     QR içine yazılacak pasaport linkini üretir.
-    Canlı Streamlit URL'si üzerinden çalışır.
     """
     if passport_id is None or str(passport_id).strip() == "":
         raise ValueError("passport_id boş olamaz.")
@@ -20,28 +19,26 @@ def generate_qr_url(passport_id):
 
 def get_passport_url(passport):
     """
-    Pasaport verisi için güncel canlı URL üretir.
-    JSON içindeki eski linkleri dikkate almaz.
+    Her zaman güncel canlı link üretir, JSON içindeki eski verilere güvenmez.
     """
     passport_id = (
-        passport.get("pasaport_id") 
-        or passport.get("passport_id") 
+        passport.get("pasaport_id")
+        or passport.get("passport_id")
         or passport.get("id")
     )
 
-    if passport_id is None:
-        raise KeyError("Pasaport verisinde ID bulunamadı.")
+    if not passport_id:
+        raise ValueError("Pasaport ID bulunamadı.")
 
     return generate_qr_url(passport_id)
 
 
 def create_qr_code(qr_text):
     """
-    Verilen bağlantıyı QR koda çevirir.
-    Geriye PNG byte verisi döndürür.
+    Verilen metni QR koda çevirir.
     """
     if qr_text is None or str(qr_text).strip() == "":
-        raise ValueError("QR kod oluşturmak için bağlantı boş olamaz.")
+        raise ValueError("QR kod metni boş olamaz.")
 
     qr = qrcode.QRCode(
         version=None,
