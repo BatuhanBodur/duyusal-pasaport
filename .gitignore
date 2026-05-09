@@ -7,3 +7,4 @@ venv/
 .ipynb_checkpoints/
 .streamlit/
 ! .streamlit/config.toml
+.streamlit/secrets.toml

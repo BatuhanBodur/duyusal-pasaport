@@ -68,6 +68,9 @@ if qr_passport_id:
 if "passport" not in st.session_state:
     st.session_state.passport = None
 
+if "last_saved_id" not in st.session_state:
+    st.session_state.last_saved_id = None
+
 
 # ============================================================
 # SIDEBAR FORM
@@ -138,14 +141,14 @@ with st.sidebar:
             if not patient_name.strip() or not caregiver_name.strip():
                 st.error("Ad Soyad ve Veli bilgileri zorunludur.")
             else:
-                # 1. ID Üret
+                # 1. Tek Seferlik ID Üretimi
                 new_id = str(uuid.uuid4())[:8].upper()
                 
                 # 2. Risk ve Önerileri Hesapla
                 risk_score, risk_level, risk_css = calculate_risk(sound, light, touch, crowd, waiting)
                 recommendations = generate_recommendations(sound, light, touch, crowd, waiting, triggers, calming_methods)
 
-                # 3. Nesneyi Oluştur
+                # 3. Nesneyi Oluştur (Veli bilgileri kesin olarak ayrıştırıldı)
                 passport_data = {
                     "pasaport_id": new_id,
                     "pasaport_url": generate_qr_url(new_id),
@@ -176,20 +179,21 @@ with st.sidebar:
                     "ek_notlar": notes
                 }
 
-                # 4. JSON'a Kaydet (En önemli adım)
+                # 4. Supabase'e Kaydet (Sadece 1 kez çağrılır)
                 save_passport(passport_data)
                 
                 # 5. Session State Güncelle
                 st.session_state.passport = passport_data
+                st.session_state.last_saved_id = new_id
                 
                 # 6. Başarı Mesajı ve Doğrulama
-                st.success(f"✅ Pasaport JSON'a kaydedildi. ID: {new_id}")
+                st.success(f"✅ Pasaport başarıyla oluşturuldu ve Supabase'e kaydedildi. ID: {new_id}")
                 
                 # Doğrulama Testi
                 if find_passport_by_id(new_id):
-                    st.info("✅ Kayıt veritabanında doğrulandı. QR okutulmaya hazır.")
+                    st.info("✅ Kayıt Supabase veritabanında doğrulandı. QR okutulmaya hazır.")
                 else:
-                    st.error("❌ Kayıt JSON'a yazılamadı! Lütfen tekrar deneyin.")
+                    st.error("❌ Kayıt Supabase'e yazılamadı! Lütfen tekrar deneyin.")
 
 
 # ============================================================
@@ -216,10 +220,12 @@ with tab2:
     if passport is None:
         st.info("Önce sol menüden pasaport oluşturmalısın.")
     else:
+        # Burada tekrar save_passport çağrılmaz, mevcut state kullanılır
         render_digital_passport(passport, create_qr_code)
 
 with tab3:
     if passport is None:
         st.info("Önce pasaport oluşturulmalıdır.")
     else:
+        # Burada tekrar save_passport çağrılmaz, mevcut state kullanılır
         render_staff_panel(passport)

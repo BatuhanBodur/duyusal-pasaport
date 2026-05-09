@@ -115,7 +115,7 @@ def render_qr_personnel_panel(passport):
             <p><b>Tanı / Durum:</b> {escape(str(patient["durum"]))}</p>
             <p><b>Risk Durumu:</b> <span class="{passport["risk_css"]}">{passport["risk_seviyesi"]} Risk</span> (Skor: {passport["risk_skoru"]}/5)</p>
             <p><b>İletişim Tercihi:</b> {escape(str(passport["iletisim_tercihi"]))}</p>
-            <p><b>Veli / Refakatçi:</b> {escape(str(caregiver["ad_soyad"]))} - {escape(str(caregiver["phone"] if "phone" in caregiver else caregiver.get("telefon", "Belirtilmedi")))}</p>
+            <p><b>Veli / Refakatçi:</b> {escape(str(caregiver["ad_soyad"]))} - {escape(str(caregiver.get("telefon", "Belirtilmedi")))}</p>
         </div>
     </div>
     """, unsafe_allow_html=True)

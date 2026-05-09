@@ -1,1 +1,51 @@
-{}
+{
+    "B1BCC344": {
+        "pasaport_id": "B1BCC344",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=B1BCC344",
+        "olusturma_tarihi": "10.05.2026 00:01",
+        "hasta_bilgileri": {
+            "ad_soyad": "İbrahim Halil Çağay",
+            "yas": 10,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Melikşah Özçur",
+            "telefon": "5565465465"
+        },
+        "iletisim_tercihi": "Kısa ve net cümleler",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 3,
+            "isik_hassasiyeti": 2,
+            "dokunma_hassasiyeti": 5,
+            "kalabalik_hassasiyeti": 4,
+            "bekleme_toleransi_dusuklugu": 5
+        },
+        "tetikleyiciler": [
+            "Kalabalık ortam",
+            "Parlak ışık",
+            "Yüksek ses"
+        ],
+        "sakinlestirici_yontemler": [
+            "Kısa açıklama yapılmalı",
+            "Veli yanında olmalı",
+            "Loş ışık tercih edilmeli"
+        ],
+        "risk_skoru": 3.7,
+        "risk_seviyesi": "Yüksek",
+        "risk_css": "badge-high",
+        "personel_onerileri": [
+            "Fiziksel temas öncesinde bireye kısa ve net açıklama yapılmalıdır.",
+            "Ani temaslardan kaçınılmalı, hazırlık süresi verilmelidir.",
+            "Kalabalık bekleme salonu yerine sakin bir alana alınmalıdır.",
+            "Gereksiz insan yoğunluğu azaltılmalıdır.",
+            "Bekleme süresi mümkün olduğunca kısaltılmalıdır.",
+            "Öncelikli sıra veya hızlı yönlendirme uygulanmalıdır.",
+            "Kulaklık veya ses azaltıcı ekipman kullanımına izin verilmelidir.",
+            "Giriş ve bekleme süreci daha sakin alanlarda yönetilmelidir.",
+            "Veli veya refakatçi süreç boyunca mümkün olduğunca yanında tutulmalıdır.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır.",
+            "Işık seviyesi daha düşük ve kontrollü bir alan tercih edilmelidir."
+        ],
+        "ek_notlar": "dsmlkfmdslflks"
+    }
+}
