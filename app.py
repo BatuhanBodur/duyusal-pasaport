@@ -44,22 +44,68 @@ if "passport" not in st.session_state:
 
 
 # ============================================================
-# QR İLE GELEN PASAPORTU YÜKLE
+# QR İLE GELEN PASAPORTU YÜKLE VE GÖRÜNTÜLE (READ-ONLY MOD)
 # ============================================================
 
-# ============================================================
-# QR İLE GELEN PASAPORTU YÜKLE
-# ============================================================
-
-# Streamlit'in güncel query params yapısı
+# URL parametrelerini oku
 params = st.query_params
-query_passport_id = params.get("passport_id", None)
+qr_passport_id = params.get("passport_id", None)
 
-if query_passport_id and st.session_state.passport is None:
-    loaded_passport = get_passport_from_database(query_passport_id)
-
-    if loaded_passport:
-        st.session_state.passport = loaded_passport
+# Eğer URL'de passport_id varsa, uygulama sadece görüntüleme modunda çalışır
+if qr_passport_id:
+    # Sidebar'ı ve genişletme butonunu CSS ile tamamen gizle (Ekstra güvenlik)
+    st.markdown("""
+        <style>
+            [data-testid="stSidebar"] {
+                display: none;
+            }
+            [data-testid="collapsedControl"] {
+                display: none;
+            }
+            .main .block-container {
+                max-width: 1100px;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    from database import find_passport_by_id
+    
+    # Veritabanında ara
+    passport_data = find_passport_by_id(qr_passport_id)
+    
+    if passport_data:
+        # Kahraman alanını göster
+        render_hero()
+        
+        # Bilgilendirme mesajı
+        st.info(f"🔍 **Duyusal Pasaport Görüntüleme Modu:** {qr_passport_id}")
+        
+        # Sekmeleri kullanarak bilgileri göster (Read-only)
+        tab_view1, tab_view2, tab_view3 = st.tabs([
+            "📊 Genel Görünüm", 
+            "🪪 Dijital Pasaport", 
+            "👩‍⚕️ Personel Paneli"
+        ])
+        
+        with tab_view1:
+            render_general_overview(passport_data)
+        
+        with tab_view2:
+            render_digital_passport(passport_data, create_qr_code)
+            
+        with tab_view3:
+            # Personel paneli read-only modda render edilir
+            render_staff_panel(passport_data, is_read_only=True)
+            
+        # Akışı burada durdur! (Sidebar ve kayıt formu kesinlikle render edilmez)
+        st.stop()
+    else:
+        # Kayıt bulunamadıysa hata göster ve dur
+        render_hero()
+        st.error(f"⚠️ Bu QR koda ait hasta bilgisi bulunamadı: {qr_passport_id}")
+        st.stop()
 
 
 # ============================================================

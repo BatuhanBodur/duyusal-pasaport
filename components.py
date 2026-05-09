@@ -262,7 +262,7 @@ def render_digital_passport(passport, create_qr_code):
         )
 
 
-def render_staff_panel(passport):
+def render_staff_panel(passport, is_read_only=False):
     patient = passport["hasta_bilgileri"]
 
     st.markdown(f"""
@@ -348,5 +348,6 @@ Destekleyici yöntemler: {", ".join(passport["sakinlestirici_yontemler"]) if pas
     st.text_area(
         "Kopyalanabilir Personel Notu",
         value=staff_note,
-        height=190
-    )
+        height=190,
+        disabled=is_read_only
+    )

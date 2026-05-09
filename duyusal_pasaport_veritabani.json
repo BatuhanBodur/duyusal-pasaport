@@ -447,5 +447,215 @@
             "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır."
         ],
         "ek_notlar": "Galatasaray ismini duyunca kriz geçiriyor."
+    },
+    "D619C0ED": {
+        "pasaport_id": "D619C0ED",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=D619C0ED",
+        "olusturma_tarihi": "09.05.2026 22:49",
+        "hasta_bilgileri": {
+            "ad_soyad": "Ziya Kolusayın",
+            "yas": 24,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Giray Tekerek",
+            "telefon": "5565465465"
+        },
+        "iletisim_tercihi": "Görsel anlatım",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 2,
+            "isik_hassasiyeti": 4,
+            "dokunma_hassasiyeti": 2,
+            "kalabalik_hassasiyeti": 5,
+            "bekleme_toleransi_dusuklugu": 2
+        },
+        "tetikleyiciler": [
+            "Beyaz önlük",
+            "Ani temas",
+            "İğne / kan alma"
+        ],
+        "sakinlestirici_yontemler": [
+            "Kısa açıklama yapılmalı",
+            "Tablet / görsel destek",
+            "Oyuncak / nesne"
+        ],
+        "risk_skoru": 3.0,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Loş veya kontrollü ışıklı alan tercih edilmelidir.",
+            "Parlak floresan ışıkların yoğun olduğu alanlardan kaçınılmalıdır.",
+            "Kalabalık bekleme salonu yerine sakin bir alana alınmalıdır.",
+            "Gereksiz insan yoğunluğu azaltılmalıdır.",
+            "İğne veya kan alma işleminden önce sakin bir dille açıklama yapılmalıdır.",
+            "Ani fiziksel temas kesinlikle önlenmelidir.",
+            "Personel yaklaşımı yumuşak olmalı, beyaz önlük kaynaklı kaygı azaltılmalıdır.",
+            "Görsel destek veya dikkat dağıtıcı rahatlatıcı araçlar kullanılabilir.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır."
+        ],
+        "ek_notlar": "kasnlnasflalsf"
+    },
+    "167A8150": {
+        "pasaport_id": "167A8150",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=167A8150",
+        "olusturma_tarihi": "09.05.2026 22:57",
+        "hasta_bilgileri": {
+            "ad_soyad": "İbrahim Halil Çağay",
+            "yas": 10,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Melikşah Özçur",
+            "telefon": "5565465465"
+        },
+        "iletisim_tercihi": "Kısa ve net cümleler",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 2,
+            "isik_hassasiyeti": 4,
+            "dokunma_hassasiyeti": 3,
+            "kalabalik_hassasiyeti": 1,
+            "bekleme_toleransi_dusuklugu": 4
+        },
+        "tetikleyiciler": [
+            "Ani temas",
+            "Kapalı alan",
+            "Bilinmeyen ortam"
+        ],
+        "sakinlestirici_yontemler": [
+            "Kulaklık",
+            "Oyuncak / nesne",
+            "Sessiz alan"
+        ],
+        "risk_skoru": 2.7,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Loş veya kontrollü ışıklı alan tercih edilmelidir.",
+            "Parlak floresan ışıkların yoğun olduğu alanlardan kaçınılmalıdır.",
+            "Bekleme süresi mümkün olduğunca kısaltılmalıdır.",
+            "Öncelikli sıra veya hızlı yönlendirme uygulanmalıdır.",
+            "Ani fiziksel temas kesinlikle önlenmelidir."
+        ],
+        "ek_notlar": "ldsnfkldfs"
+    },
+    "3F10352B": {
+        "pasaport_id": "3F10352B",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=3F10352B",
+        "olusturma_tarihi": "09.05.2026 22:59",
+        "hasta_bilgileri": {
+            "ad_soyad": "Batuhan Demir",
+            "yas": 10,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Zeynep Demir",
+            "telefon": "5551112233"
+        },
+        "iletisim_tercihi": "Kısa ve net cümleler",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 3,
+            "isik_hassasiyeti": 3,
+            "dokunma_hassasiyeti": 3,
+            "kalabalik_hassasiyeti": 3,
+            "bekleme_toleransi_dusuklugu": 3
+        },
+        "tetikleyiciler": [],
+        "sakinlestirici_yontemler": [],
+        "risk_skoru": 3.0,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Standart süreç uygulanabilir; yine de bireyin anlık tepkileri gözlemlenmelidir."
+        ],
+        "ek_notlar": ""
+    },
+    "D5FD1868": {
+        "pasaport_id": "D5FD1868",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=D5FD1868",
+        "olusturma_tarihi": "09.05.2026 23:20",
+        "hasta_bilgileri": {
+            "ad_soyad": "İbrahim Halil Çağay",
+            "yas": 16,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Melikşah Özçur",
+            "telefon": "5352651255"
+        },
+        "iletisim_tercihi": "Görsel anlatım",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 2,
+            "isik_hassasiyeti": 4,
+            "dokunma_hassasiyeti": 2,
+            "kalabalik_hassasiyeti": 5,
+            "bekleme_toleransi_dusuklugu": 2
+        },
+        "tetikleyiciler": [
+            "Parlak ışık",
+            "Kalabalık ortam",
+            "Yüksek ses"
+        ],
+        "sakinlestirici_yontemler": [
+            "Kısa açıklama yapılmalı",
+            "Veli yanında olmalı",
+            "Tablet / görsel destek"
+        ],
+        "risk_skoru": 3.0,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Loş veya kontrollü ışıklı alan tercih edilmelidir.",
+            "Parlak floresan ışıkların yoğun olduğu alanlardan kaçınılmalıdır.",
+            "Kalabalık bekleme salonu yerine sakin bir alana alınmalıdır.",
+            "Gereksiz insan yoğunluğu azaltılmalıdır.",
+            "Kulaklık veya ses azaltıcı ekipman kullanımına izin verilmelidir.",
+            "Giriş ve bekleme süreci daha sakin alanlarda yönetilmelidir.",
+            "Veli veya refakatçi süreç boyunca mümkün olduğunca yanında tutulmalıdır.",
+            "Görsel destek veya dikkat dağıtıcı rahatlatıcı araçlar kullanılabilir.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır."
+        ],
+        "ek_notlar": "adfnafdn"
+    },
+    "596A148B": {
+        "pasaport_id": "596A148B",
+        "pasaport_url": "https://duyusal-pasaport-batuhan.streamlit.app?passport_id=596A148B",
+        "olusturma_tarihi": "09.05.2026 23:33",
+        "hasta_bilgileri": {
+            "ad_soyad": "Mehmet Koçer",
+            "yas": 10,
+            "durum": "Otizm Spektrum Bozukluğu"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Batuhan Bodur",
+            "telefon": "5466545253"
+        },
+        "iletisim_tercihi": "Kısa ve net cümleler",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 3,
+            "isik_hassasiyeti": 3,
+            "dokunma_hassasiyeti": 3,
+            "kalabalik_hassasiyeti": 3,
+            "bekleme_toleransi_dusuklugu": 3
+        },
+        "tetikleyiciler": [
+            "Ani temas",
+            "Kapalı alan",
+            "Uzun bekleme"
+        ],
+        "sakinlestirici_yontemler": [
+            "Kısa açıklama yapılmalı",
+            "Bekleme süresi azaltılmalı",
+            "Veli yanında olmalı"
+        ],
+        "risk_skoru": 3.0,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Ani fiziksel temas kesinlikle önlenmelidir.",
+            "Veli veya refakatçi süreç boyunca mümkün olduğunca yanında tutulmalıdır.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır.",
+            "Randevu ve sıra süreci beklemeyi azaltacak şekilde planlanmalıdır."
+        ],
+        "ek_notlar": "lkdsflkmflkwf"
     }
 }
