@@ -55,22 +55,39 @@ def find_passport_by_id(passport_id):
     JSON veritabanında passport_id ile kayıt ara.
     Hem anahtar olarak hem de kayıt içindeki alanlar olarak kontrol eder.
     """
-    database = load_database()
-    if not database:
+    data = load_database()
+    target_id = str(passport_id).strip()
+
+    if not target_id:
         return None
 
-    # ID'yi string olarak normalize et
-    search_id = str(passport_id).strip()
+    # Eğer data dict ise
+    if isinstance(data, dict):
+        # 1. Önce direkt anahtar (key) olarak ara
+        if target_id in data and isinstance(data[target_id], dict):
+            return data[target_id]
 
-    # 1. Önce direkt anahtar (key) olarak ara
-    if search_id in database:
-        return database[search_id]
+        # 2. Eğer anahtar olarak yoksa, kayıtların içine bak
+        for record in data.values():
+            if isinstance(record, dict):
+                record_id = (
+                    record.get("pasaport_id")
+                    or record.get("passport_id")
+                    or record.get("id")
+                )
+                if str(record_id).strip() == target_id:
+                    return record
 
-    # 2. Eğer anahtar olarak yoksa, kayıtların içine bak (farklı alan adları için)
-    for record_id, record in database.items():
-        # Kayıt içindeki olası ID alanlarını kontrol et
-        pid = record.get("pasaport_id") or record.get("passport_id") or record.get("id")
-        if str(pid).strip() == search_id:
-            return record
+    # Eğer data list ise (eski/alternatif yapı desteği)
+    if isinstance(data, list):
+        for record in data:
+            if isinstance(record, dict):
+                record_id = (
+                    record.get("pasaport_id")
+                    or record.get("passport_id")
+                    or record.get("id")
+                )
+                if str(record_id).strip() == target_id:
+                    return record
 
     return None

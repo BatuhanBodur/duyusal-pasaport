@@ -27,7 +27,11 @@ def get_passport_url(passport):
     JSON içinde eski localhost / local IP / placeholder URL olsa bile onu kullanmaz.
     """
 
-    passport_id = passport.get("pasaport_id") or passport.get("passport_id")
+    passport_id = (
+        passport.get("pasaport_id") 
+        or passport.get("passport_id") 
+        or passport.get("id")
+    )
 
     if passport_id is None:
         raise KeyError("Pasaport verisinde 'pasaport_id' alanı bulunamadı.")

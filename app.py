@@ -71,34 +71,15 @@ if qr_passport_id:
     """, unsafe_allow_html=True)
     
     from database import find_passport_by_id
+    from components import render_qr_readonly_mode
     
     # Veritabanında ara
     passport_data = find_passport_by_id(qr_passport_id)
     
     if passport_data:
-        # Kahraman alanını göster
-        render_hero()
+        # Doğrudan özel read-only personel panelini göster
+        render_qr_readonly_mode(passport_data)
         
-        # Bilgilendirme mesajı
-        st.info(f"🔍 **Duyusal Pasaport Görüntüleme Modu:** {qr_passport_id}")
-        
-        # Sekmeleri kullanarak bilgileri göster (Read-only)
-        tab_view1, tab_view2, tab_view3 = st.tabs([
-            "📊 Genel Görünüm", 
-            "🪪 Dijital Pasaport", 
-            "👩‍⚕️ Personel Paneli"
-        ])
-        
-        with tab_view1:
-            render_general_overview(passport_data)
-        
-        with tab_view2:
-            render_digital_passport(passport_data, create_qr_code)
-            
-        with tab_view3:
-            # Personel paneli read-only modda render edilir
-            render_staff_panel(passport_data, is_read_only=True)
-            
         # Akışı burada durdur! (Sidebar ve kayıt formu kesinlikle render edilmez)
         st.stop()
     else:

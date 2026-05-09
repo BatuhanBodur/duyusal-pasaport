@@ -269,6 +269,8 @@ def render_staff_panel(passport, is_read_only=False):
     <div class="custom-card">
         <div class="section-title">👩‍⚕️ Personel İçin Hızlı Bilgilendirme</div>
         <p><b>Hasta:</b> {escape(str(patient["ad_soyad"]))}</p>
+        <p><b>Yaş:</b> {patient["yas"]}</p>
+        <p><b>Tanı / Durum:</b> {escape(str(patient["durum"]))}</p>
         <p><b>Risk Durumu:</b> 
             <span class="{passport["risk_css"]}">{passport["risk_seviyesi"]} Risk</span>
         </p>
@@ -350,4 +352,60 @@ Destekleyici yöntemler: {", ".join(passport["sakinlestirici_yontemler"]) if pas
         value=staff_note,
         height=190,
         disabled=is_read_only
-    )
+    )
+
+
+def render_qr_readonly_mode(passport):
+    """
+    QR kod ile gelen kullanıcıya doğrudan personel paneli ve kritik bilgileri gösterir.
+    Sidebar ve interaktif öğeler içermez.
+    """
+    patient = passport["hasta_bilgileri"]
+    caregiver = passport["veli_bilgileri"]
+    
+    render_hero()
+    
+    st.success(f"🔍 Duyusal Pasaport Görüntüleme Modu: {passport['pasaport_id']}")
+    
+    # Personel Paneli İçeriği (Hızlı Bilgilendirme)
+    render_staff_panel(passport, is_read_only=True)
+    
+    st.markdown("---")
+    
+    # Ek Detaylar
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="custom-card">
+            <div class="section-title">👤 Birey ve Veli Bilgileri</div>
+            <p><b>Veli / Refakatçi:</b> {escape(str(caregiver["ad_soyad"]))}</p>
+            <p><b>Telefon:</b> {escape(str(caregiver["telefon"])) if caregiver["telefon"] else "Belirtilmedi"}</p>
+            <p><b>Oluşturulma Tarihi:</b> {passport["olusturma_tarihi"]}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown("### 📈 Duyusal Profil Detayı")
+            render_profile_summary(passport["duyusal_profil"])
+            
+    with col2:
+        st.markdown("""
+        <div class="custom-card">
+            <div class="section-title">📝 Ek Notlar</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.write(passport["ek_notlar"] if passport["ek_notlar"] else "Ek not girilmedi.")
+        
+        # QR kodun kendisini de göster (Byte olarak üretilip gösterilir, MediaFileHandler hatasını önler)
+        from qr_utils import create_qr_code, generate_qr_url
+        qr_url = generate_qr_url(passport["pasaport_id"])
+        qr_bytes = create_qr_code(qr_url)
+        
+        st.markdown("""
+        <div class="custom-card">
+            <div class="section-title">📱 QR Kaynak</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.image(qr_bytes, width=200)
+
