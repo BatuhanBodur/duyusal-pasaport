@@ -1,39 +1,53 @@
 import qrcode
 from io import BytesIO
-import streamlit as st
+from urllib.parse import urlencode
 
-# Streamlit Cloud Deployment için Base URL
-# GitHub'a yükledikten sonra burayı kendi uygulama linkinizle değiştirin.
-BASE_URL = "https://senin-uygulama-linkin.streamlit.app"
+
+BASE_URL = "https://duyusal-pasaport-batuhan.streamlit.app"
+
 
 def generate_qr_url(passport_id):
     """
     QR içine yazılacak pasaport linkini üretir.
-    Deployment sonrası BASE_URL üzerinden çalışır.
+    Canlı Streamlit URL'si üzerinden çalışır.
+    Örnek çıktı:
+    https://duyusal-pasaport-batuhan.streamlit.app?passport_id=123
     """
-    return f"{BASE_URL}?passport_id={passport_id}"
+
+    if passport_id is None or str(passport_id).strip() == "":
+        raise ValueError("passport_id boş olamaz.")
+
+    query = urlencode({"passport_id": str(passport_id)})
+    return f"{BASE_URL}?{query}"
 
 
 def get_passport_url(passport):
     """
-    Pasaport verisinin içindeki URL varsa onu döndürür.
-    Yoksa güncel BASE_URL ile yeniden üretir.
+    Pasaport verisi için güncel canlı URL üretir.
+    JSON içinde eski localhost / local IP / placeholder URL olsa bile onu kullanmaz.
     """
 
-    if "pasaport_url" in passport and passport["pasaport_url"] and not passport["pasaport_url"].startswith("http://localhost"):
-        return passport["pasaport_url"]
+    passport_id = passport.get("pasaport_id") or passport.get("passport_id")
 
-    return generate_qr_url(passport["pasaport_id"])
+    if passport_id is None:
+        raise KeyError("Pasaport verisinde 'pasaport_id' alanı bulunamadı.")
+
+    return generate_qr_url(passport_id)
 
 
 def create_qr_code(qr_text):
     """
     Verilen bağlantıyı QR koda çevirir.
     Geriye PNG byte verisi döndürür.
+    Streamlit içinde st.image(...) ile gösterilebilir.
     """
 
+    if qr_text is None or str(qr_text).strip() == "":
+        raise ValueError("QR kod oluşturmak için bağlantı boş olamaz.")
+
     qr = qrcode.QRCode(
-        version=3,
+        version=None,
+        error_correction=qrcode.constants.ERROR_CORRECT_M,
         box_size=9,
         border=3
     )

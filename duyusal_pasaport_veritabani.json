@@ -402,5 +402,50 @@
             "Görsel destek veya dikkat dağıtıcı rahatlatıcı araçlar kullanılabilir."
         ],
         "ek_notlar": "jkdwbfkjwef"
+    },
+    "2F26E1E3": {
+        "pasaport_id": "2F26E1E3",
+        "pasaport_url": "https://senin-uygulama-linkin.streamlit.app?passport_id=2F26E1E3",
+        "olusturma_tarihi": "09.05.2026 22:41",
+        "hasta_bilgileri": {
+            "ad_soyad": "Ziya Kolusayın",
+            "yas": 21,
+            "durum": "Özel öğrenme güçlüğü"
+        },
+        "veli_bilgileri": {
+            "ad_soyad": "Giray Tekerek",
+            "telefon": "5396524565"
+        },
+        "iletisim_tercihi": "Yavaş ve sakin konuşma",
+        "duyusal_profil": {
+            "ses_hassasiyeti": 5,
+            "isik_hassasiyeti": 3,
+            "dokunma_hassasiyeti": 4,
+            "kalabalik_hassasiyeti": 2,
+            "bekleme_toleransi_dusuklugu": 1
+        },
+        "tetikleyiciler": [
+            "Yüksek ses",
+            "Parlak ışık",
+            "Ani temas"
+        ],
+        "sakinlestirici_yontemler": [
+            "Veli yanında olmalı",
+            "Kısa açıklama yapılmalı"
+        ],
+        "risk_skoru": 3.2,
+        "risk_seviyesi": "Orta",
+        "risk_css": "badge-mid",
+        "personel_onerileri": [
+            "Sessiz bekleme alanına yönlendirme yapılmalıdır.",
+            "Yüksek sesli anons ve ani ses uyaranları azaltılmalıdır.",
+            "Fiziksel temas öncesinde bireye kısa ve net açıklama yapılmalıdır.",
+            "Ani temaslardan kaçınılmalı, hazırlık süresi verilmelidir.",
+            "Kulaklık veya ses azaltıcı ekipman kullanımına izin verilmelidir.",
+            "Ani fiziksel temas kesinlikle önlenmelidir.",
+            "Veli veya refakatçi süreç boyunca mümkün olduğunca yanında tutulmalıdır.",
+            "Tüm işlem adımları kısa, net ve sakin şekilde anlatılmalıdır."
+        ],
+        "ek_notlar": "Galatasaray ismini duyunca kriz geçiriyor."
     }
 }
